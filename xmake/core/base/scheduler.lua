@@ -553,9 +553,12 @@ function scheduler:co_lock(lockname)
         end
 
         -- register timeout task to timer
+        print("waiting", running, lockname)
         local function timer_callback (cancel)
+            print("callback", running, lockname)
             if co_locked_tasks[lockname] == nil then
                 if running:is_suspended() then
+                    print("resume", running, lockname)
                     return self:co_resume(running)
                 end
             else
