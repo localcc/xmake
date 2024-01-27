@@ -782,7 +782,8 @@ end
 --                                       envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
 --
 function os.execv(program, argv, opt)
-
+local scheduler = require("base/scheduler")
+    
     -- is not executable program file?
     opt = opt or {}
     local filename = tostring(program)
@@ -867,7 +868,7 @@ function os.execv(program, argv, opt)
         -- trace process
         if os._is_tracing_process() then
             -- we cannot use cprint, it will cause dead-loop on windows, winos.version/os.iorunv
-            utils.print("%s: %s %s", proc, filename, argv and os.args(argv) or "")
+            utils.print("%s: %s %s %s", proc, filename, argv and os.args(argv) or "",scheduler.co_running()) )
         end
 
         -- wait process
