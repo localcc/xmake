@@ -49,6 +49,7 @@ function _add_build_sanitizer(target, sourcekind, checkmode)
 end
 
 function main(target, sourcekind)
+    print("config sanitizer ..", target:name())
     local sanitizer = false
     for _, checkmode in ipairs({"address", "thread", "memory", "leak", "undefined"}) do
         local enabled = target:policy("build.sanitizer." .. checkmode)

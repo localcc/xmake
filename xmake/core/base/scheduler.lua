@@ -526,6 +526,7 @@ function scheduler:co_lock(lockname)
 
     -- get the running coroutine
     local running = self:co_running()
+    print("locking", running, lockname)
     if not running then
         return false, "we must call co_lock() in coroutine with scheduler!"
     end
@@ -546,9 +547,11 @@ function scheduler:co_lock(lockname)
         -- try to lock it
         if co_locked_tasks[lockname] == nil then
             co_locked_tasks[lockname] = running
+            print("locked", running, lockname)
             return true
         -- has been locked by the current coroutine
         elseif co_locked_tasks[lockname] == running then
+            print("has been locked", running, lockname)
             return true
         end
 
@@ -587,6 +590,8 @@ function scheduler:co_unlock(lockname)
     if not self._STARTED then
         return false, "the scheduler is stopped!"
     end
+
+    print("unlock", running, lockname)
 
     -- do unlock
     local co_locked_tasks = self._CO_LOCKED_TASKS
@@ -1060,8 +1065,11 @@ function scheduler:runloop()
             -- get the next timeout
             timeout = self:_timer():delay() or 1000
 
+            print("poller wait timeout", timeout)
+
             -- wait events
             local count, events = poller:wait(timeout)
+            print("waited", count)
             if count < 0 then
                 ok = false
                 errors = events
@@ -1095,6 +1103,7 @@ function scheduler:runloop()
             end
         end
 
+        print("spank timer ..")
         -- spank the timer and trigger all timeout tasks
         ok, errors = self:_timer():next()
         if not ok then

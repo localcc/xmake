@@ -270,6 +270,7 @@ end
 --
 function sandbox_lib_detect_find_program.main(name, opt)
     opt = opt or {}
+    print("find_program", name)
 
     -- init cachekey
     local cachekey = "find_program"
