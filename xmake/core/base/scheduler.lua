@@ -711,7 +711,7 @@ end
 function scheduler:co_running()
     if self._ENABLED then
         local running = coroutine.running()
-        return running and self:co_tasks()[running] or nil
+        return running and self:co_tasks() and self:co_tasks()[running] or nil
     end
 end
 
