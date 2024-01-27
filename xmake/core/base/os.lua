@@ -782,7 +782,7 @@ end
 --                                       envs = {PATH = "xxx;xx", CFLAGS = "xx"}}
 --
 function os.execv(program, argv, opt)
-local scheduler = require("base/scheduler")
+local scheduler = require("sandbox/modules/import/core/base/scheduler")
     
     -- is not executable program file?
     opt = opt or {}
