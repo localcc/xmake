@@ -868,7 +868,7 @@ local scheduler = require("sandbox/modules/import/core/base/scheduler")
         -- trace process
         if os._is_tracing_process() then
             -- we cannot use cprint, it will cause dead-loop on windows, winos.version/os.iorunv
-            utils.print("%s: %s %s %s", proc, filename, argv and os.args(argv) or "",scheduler.co_running())
+            utils.print("%s: %s %s %s %s", proc, filename, argv and os.args(argv) or "",scheduler.co_running(), debug.traceback())
         end
 
         -- wait process
