@@ -48,6 +48,7 @@ function timer:post_at(func, when, period, opt)
     opt = opt or {}
     local task = {when = when, func = func, period = period, continuous = opt.continuous, cancel = false}
     self:_tasks():push(task)
+    print("post", when, period, task)
     return task
 end
 
