@@ -65,8 +65,10 @@ function timer:delay()
         if task then
             local now = os.mclock()
             delay = task.when > now and task.when - now or 0
+            print("timer", tasks:length(), now, delay, tostring(task), task.when)
         end
     end
+    
     return delay
 end
 
