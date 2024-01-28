@@ -48,7 +48,6 @@ function timer:post_at(func, when, period, opt)
     opt = opt or {}
     local task = {when = when, func = func, period = period, continuous = opt.continuous, cancel = false}
     self:_tasks():push(task)
-    print("post", when, period, task, debug.traceback())
     return task
 end
 
@@ -66,10 +65,8 @@ function timer:delay()
         if task then
             local now = os.mclock()
             delay = task.when > now and task.when - now or 0
-            print("timer", tasks:length(), now, delay, tostring(task), task.when)
         end
     end
-    
     return delay
 end
 

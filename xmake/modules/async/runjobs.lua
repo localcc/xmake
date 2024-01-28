@@ -54,6 +54,7 @@ end
 -- runjobs("test", jobs, {comax = 6, distcc = distcc_build_client.singleton()}
 --
 function main(name, jobs, opt)
+    print("runjobs ...", name)
 
     -- init options
     opt = opt or {}
@@ -93,6 +94,7 @@ function main(name, jobs, opt)
         scheduler.co_group_begin(group_timer, function (co_group)
             scheduler.co_start_withopt({name = name .. "/timer", isolate = opt.isolate}, function ()
                 while not stop do
+                    print("timer: timeout 1", timeout)
                     os.sleep(timeout)
                     if not stop then
                         local indices
@@ -109,6 +111,7 @@ function main(name, jobs, opt)
         scheduler.co_group_begin(group_timer, function (co_group)
             scheduler.co_start_withopt({name = name .. "/tips", isolate = opt.isolate}, function ()
                 while not stop do
+                    print("timer: timeout 2", timeout)
                     os.sleep(timeout)
                     if not stop then
 
@@ -161,6 +164,7 @@ function main(name, jobs, opt)
     local abort = false
     local abort_errors
     while index < total do
+        print("runjobs", index, total)
         scheduler.co_group_begin(group_name, function (co_group)
             local freemax = comax - #co_group
             local local_max = math.min(index + freemax, total)
@@ -285,13 +289,17 @@ function main(name, jobs, opt)
         end
     end
 
+    print("wait all jobs exited", name)
     -- wait all jobs exited
     scheduler.co_group_wait(group_name)
 
+    print("wait all timer exited", name, group_timer)
     -- wait timer job exited
     if group_timer then
         stop = true
+        print("wait timer 111")
         scheduler.co_group_wait(group_timer)
+        print("wait timer 222")
     end
 
     -- restore isolated environments
