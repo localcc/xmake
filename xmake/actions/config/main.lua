@@ -398,6 +398,7 @@ force to build in current directory via run `xmake -P .`]], os.projectdir())
             _check_target_toolchains()
         end
 
+        print("load targets")
         -- load targets
         project.load_targets({recheck = recheck})
 
