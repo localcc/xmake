@@ -94,7 +94,6 @@ function main(name, jobs, opt)
         scheduler.co_group_begin(group_timer, function (co_group)
             scheduler.co_start_withopt({name = name .. "/timer", isolate = opt.isolate}, function ()
                 while not stop do
-                    print("timer: timeout 1", timeout)
                     os.sleep(timeout)
                     if not stop then
                         local indices
@@ -111,7 +110,6 @@ function main(name, jobs, opt)
         scheduler.co_group_begin(group_timer, function (co_group)
             scheduler.co_start_withopt({name = name .. "/tips", isolate = opt.isolate}, function ()
                 while not stop do
-                    print("timer: timeout 2", timeout)
                     os.sleep(timeout)
                     if not stop then
 

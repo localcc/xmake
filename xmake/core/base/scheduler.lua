@@ -339,7 +339,6 @@ function scheduler:_co_groups_resume()
                         break
                     end
                 end
-                print("_co_groups_resume", name, #co_group, count, limit, co_waiting)
 
                 -- resume the waiting coroutine of this group if some coroutines are dead in this group
                 if count >= limit and co_waiting and co_waiting:is_suspended() then
@@ -1069,11 +1068,8 @@ function scheduler:runloop()
             -- get the next timeout
             timeout = self:_timer():delay() or 1000
 
-            print("poller wait timeout", timeout)
-
             -- wait events
             local count, events = poller:wait(timeout)
-            print("waited", count)
             if count < 0 then
                 ok = false
                 errors = events
@@ -1107,7 +1103,6 @@ function scheduler:runloop()
             end
         end
 
-        print("spank timer ..")
         -- spank the timer and trigger all timeout tasks
         ok, errors = self:_timer():next()
         if not ok then
