@@ -224,6 +224,7 @@ function main(name, jobs, opt)
                     try
                     {
                         function()
+                            print("starting", scheduler.co_running())
                             if stop then
                                 return
                             end
@@ -242,6 +243,7 @@ function main(name, jobs, opt)
                                 count = count + 1
                             end
                             running_jobs_indices[i] = nil
+                            print("finished", scheduler.co_running())
                         end,
                         catch
                         {

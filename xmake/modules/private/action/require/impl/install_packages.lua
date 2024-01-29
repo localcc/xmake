@@ -480,14 +480,18 @@ function _install_packages(packages_install, packages_download, installdeps)
                         assert(instance:is_precompiled(), "package(%s) should be precompiled", instance:name())
                         -- we need to disable built and re-download and re-install it
                         instance:fallback_build()
+                        print("download", instance:name(), scheduler.co_running())
                         action_download(instance)
+                        print("install", instance:name(), scheduler.co_running())
                         action_install(instance)
+                        print("install end", instance:name(), scheduler.co_running())
                     end
                 end
 
                 -- reset package status cache
                 _g.package_status_cache = nil
 
+                        print("register_packages", instance:name(), scheduler.co_running())
                 -- register it to local cache if it is root required package
                 --
                 -- @note we need to register the package in time,
@@ -518,11 +522,6 @@ function _install_packages(packages_install, packages_download, installdeps)
           comax = (option.get("verbose") or option.get("diagnosis")) and 1 or 4,
           isolate = true,
           on_timer = function (running_jobs_indices)
-
-        -- do not print progress info if be verbose
-        if option.get("verbose") or not show_wait then
-            return
-        end
 
         -- make installing and downloading packages list
         local installing = {}

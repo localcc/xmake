@@ -339,6 +339,7 @@ function scheduler:_co_groups_resume()
                         break
                     end
                 end
+                print("_co_groups_resume", name, #co_group, count, limit, co_waiting)
 
                 -- resume the waiting coroutine of this group if some coroutines are dead in this group
                 if count >= limit and co_waiting and co_waiting:is_suspended() then
@@ -669,6 +670,7 @@ function scheduler:co_group_wait(name, opt)
     repeat
         count = 0
         for _, co in ipairs(co_group) do
+            print("  co: ", co)
             if count < limit then
                 if co:is_dead() then
                     count = count + 1
@@ -677,6 +679,7 @@ function scheduler:co_group_wait(name, opt)
                 break
             end
         end
+        print("co_group_wait", count, limit, #co_group)
         if count < limit then
             self._CO_GROUPS_WAITING = self._CO_GROUPS_WAITING or {}
             self._CO_GROUPS_WAITING[name] = {running, limit}
@@ -684,6 +687,7 @@ function scheduler:co_group_wait(name, opt)
         end
     until count >= limit
 
+    print("co_group_wait end")
     -- remove all dead coroutines in group
     if limit == #co_group and count == limit then
         self._CO_GROUPS[name] = nil
