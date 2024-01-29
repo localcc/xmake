@@ -669,6 +669,7 @@ function scheduler:co_group_wait(name, opt)
     repeat
         count = 0
         for _, co in ipairs(co_group) do
+            print("  co: ", co)
             if count < limit then
                 if co:is_dead() then
                     count = count + 1
