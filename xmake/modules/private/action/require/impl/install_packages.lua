@@ -523,6 +523,11 @@ function _install_packages(packages_install, packages_download, installdeps)
           isolate = true,
           on_timer = function (running_jobs_indices)
 
+        -- do not print progress info if be verbose
+        if option.get("verbose") or not show_wait then
+            return
+        end
+
         -- make installing and downloading packages list
         local installing = {}
         local downloading = {}
