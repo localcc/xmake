@@ -884,7 +884,7 @@ end
 
 -- do install for make
 function _install_for_make(package, configs, opt)
-    local jobs = _get_parallel_njobs(opt)
+    local jobs = "1"--_get_parallel_njobs(opt)
     local argv = {"-j" .. jobs}
     --if option.get("diagnosis") then
         table.insert(argv, "VERBOSE=1")
@@ -909,7 +909,9 @@ function _install_for_make(package, configs, opt)
         os.vrunv(make, argv)
         os.vrunv(make, {"install"})
     else
+        print("make")
         os.vexecv("make", argv)
+        print("make install")
         os.vexecv("make", {"install"})
     end
 end
