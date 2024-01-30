@@ -886,9 +886,9 @@ end
 function _install_for_make(package, configs, opt)
     local jobs = _get_parallel_njobs(opt)
     local argv = {"-j" .. jobs}
-    if option.get("diagnosis") then
+    --if option.get("diagnosis") then
         table.insert(argv, "VERBOSE=1")
-    end
+    --end
     if is_host("bsd") then
         os.vrunv("gmake", argv)
         os.vrunv("gmake", {"install"})
@@ -909,8 +909,8 @@ function _install_for_make(package, configs, opt)
         os.vrunv(make, argv)
         os.vrunv(make, {"install"})
     else
-        os.vrunv("make", argv)
-        os.vrunv("make", {"install"})
+        os.vexec("make", argv)
+        os.vexev("make", {"install"})
     end
 end
 
