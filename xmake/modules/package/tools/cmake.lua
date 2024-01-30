@@ -909,8 +909,8 @@ function _install_for_make(package, configs, opt)
         os.vrunv(make, argv)
         os.vrunv(make, {"install"})
     else
-        os.vexec("make", argv)
-        os.vexev("make", {"install"})
+        os.vexecv("make", argv)
+        os.vexecv("make", {"install"})
     end
 end
 
