@@ -912,7 +912,11 @@ function _install_for_make(package, configs, opt)
         print("make")
         os.vexecv("make", argv)
         print("make install")
-        os.vexecv("make", {"-j" .. jobs, "install"})
+        if package:name() == "bullet3" or package:name() == "libsdl" then
+            os.vexecv("make", {"-d", "--trace", "install"})
+        else
+            os.vexecv("make", {"install"})
+        end
     end
 end
 
