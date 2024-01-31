@@ -912,11 +912,7 @@ function _install_for_make(package, configs, opt)
         print("make")
         os.vexecv("make", argv)
         print("make install")
-        if package:name() == "bullet3" or package:name() == "libsdl" then
-            os.vexecv("dtruss", {"make", "install"})
-        else
-            os.vexecv("make", {"install"})
-        end
+        os.vexecv("make", {"-j" .. jobs, "install"})
     end
 end
 
