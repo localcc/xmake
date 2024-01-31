@@ -38,7 +38,7 @@ jobs:
 
       - name: Tests
         run: |
-          dtruss -f xmake-version
+          sudo dtruss -f xmake --root --version
           xmake lua -v -D tests/run.lua
           xrepo --version
 
